@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<QuestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Replicas>
+    <Replica>
+      <number>0</number>
+      <text>Тревога!
+Сюда приближается большой отряд кубоидов, не меньше десятка!
+Защитите нас от них, мы в долгу не останемся!
+Бегите же, садитесь в свой истребитель, что вы стоите?</text>
+      <anwser1>Дайте мне хоть скафандр надеть!</anwser1>
+      <num1>-2</num1>
+      <anwser2> </anwser2>
+      <num2>-1</num2>
+      <anwser3> </anwser3>
+      <num3>-1</num3>
+    </Replica>
+    <Replica>
+      <number>1</number>
+      <text>Отбейте атаку кубоидов, и только после этого возращайтесь за новым заданием!</text>
+      <anwser1> </anwser1>
+      <num1>-1</num1>
+      <anwser2> </anwser2>
+      <num2>-1</num2>
+      <anwser3> </anwser3>
+      <num3>-1</num3>
+    </Replica>
+    <Replica>
+      <number>2</number>
+      <text>Мы спасены? 
+Огромное вам спасибо! Вы так вовремя прилетели!
+Мы уже думали, что нам пришел конец, когда радар зафиксировал приближение крупного отряда чужаков.
+Мы очень вам благодарны!</text>
+      <anwser1>Это просто моя работа.</anwser1>
+      <num1>-3</num1>
+      <anwser2 />
+      <num2>-1</num2>
+      <anwser3 />
+      <num3>-1</num3>
+    </Replica>
+  </Replicas>
+</QuestData>

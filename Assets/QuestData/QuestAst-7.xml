@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<QuestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Replicas>
+    <Replica>
+      <number>0</number>
+      <text>Что такое? Чего ты такой радостный? Где ты пропадал? Что в этом ящике?</text>
+      <anwser1>В этом ящике наше спасение. Я купил у ученых необходимые нам запчасти!</anwser1>
+      <num1>1</num1>
+      <anwser2> </anwser2>
+      <num2>-1</num2>
+      <anwser3> </anwser3>
+      <num3>-1</num3>
+    </Replica>
+    <Replica>
+      <number>1</number>
+      <text>Что? Ты их все-таки достал? Отлично!
+Хотя не совсем, теперь нам еще надо найти новое укрытие, на которое бы никто не претендовал.
+Но как минимум, нашим жизням ничто больше не угрожает.
+
+Вижу твою козью морду, расходы мы тебе компенсируем. Сколько? Пятнадцать тысяч? Ладно, даже торговаться не буду, найдем. Спасибо тебе.</text>
+      <anwser1>Приготовиться к прыжку.</anwser1>
+      <num1>-2</num1>
+      <anwser2> </anwser2>
+      <num2>-1</num2>
+      <anwser3> </anwser3>
+      <num3>-1</num3>
+    </Replica>
+  </Replicas>
+</QuestData>

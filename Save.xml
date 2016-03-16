@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<SaveInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <name>Mingebag</name>
+  <money>150</money>
+  <health>460</health>
+  <maxHealth>500</maxHealth>
+  <maxcargo>2500</maxcargo>
+  <maxSpeed>25</maxSpeed>
+  <acceleration>3</acceleration>
+  <yawPitchFactor>1.99</yawPitchFactor>
+  <rollFactor>1.98</rollFactor>
+  <wS1Name>Machinegun</wS1Name>
+  <wS1Num>0</wS1Num>
+  <wS2Name>Machinegun</wS2Name>
+  <wS2Num>0</wS2Num>
+  <auxName>
+    <string>GuidedLauncher</string>
+    <string>NursLauncher</string>
+    <string>NursLauncher</string>
+    <string>GuidedLauncher</string>
+  </auxName>
+  <auxNum>
+    <int>6</int>
+    <int>18</int>
+    <int>18</int>
+    <int>9</int>
+  </auxNum>
+  <spawnInNextScene>false</spawnInNextScene>
+  <spawnPositionIndex>0</spawnPositionIndex>
+  <spawned>true</spawned>
+  <hasActiveQuest>false</hasActiveQuest>
+  <base1QuestNum>0</base1QuestNum>
+  <base2QuestNum>0</base2QuestNum>
+  <InventoryItems>
+    <Item>
+      <name>Equipment3</name>
+      <title>Двигатель Кубоидов</title>
+      <desc>Компактный плазменный двигатель, практически аналогичен человеческому.</desc>
+      <weight>300</weight>
+      <quantity>1</quantity>
+      <price>100</price>
+    </Item>
+    <Item>
+      <name>Equipment2</name>
+      <title>Граббер Кубоидов</title>
+      <desc>Маломощный эмиттер гравитонов. Используется кубоидами как захват</desc>
+      <weight>150</weight>
+      <quantity>1</quantity>
+      <price>100</price>
+    </Item>
+    <Item>
+      <name>Debris</name>
+      <title>Кусок обшивки</title>
+      <desc>Обломки космического корабля. Содержит ценные конструкционные материалы</desc>
+      <weight>50</weight>
+      <quantity>1</quantity>
+      <price>10</price>
+    </Item>
+  </InventoryItems>
+</SaveInfo>

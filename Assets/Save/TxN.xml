@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<SaveInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <name>TxN</name>
+  <money>260</money>
+  <health>490</health>
+  <maxHealth>500</maxHealth>
+  <maxcargo>2500</maxcargo>
+  <maxSpeed>25</maxSpeed>
+  <acceleration>3</acceleration>
+  <yawPitchFactor>1.99</yawPitchFactor>
+  <rollFactor>1.98</rollFactor>
+  <wS1Name>Machinegun</wS1Name>
+  <wS1Num>0</wS1Num>
+  <wS2Name />
+  <wS2Num>0</wS2Num>
+  <auxName>
+    <string>NursLauncher</string>
+    <string />
+    <string />
+    <string />
+  </auxName>
+  <auxNum>
+    <int>17</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+  </auxNum>
+  <spawnInNextScene>false</spawnInNextScene>
+  <spawnPositionIndex>1</spawnPositionIndex>
+  <populateLocations>false</populateLocations>
+  <spawned>true</spawned>
+  <hasActiveQuest>false</hasActiveQuest>
+  <base1QuestNum>3</base1QuestNum>
+  <base2QuestNum>0</base2QuestNum>
+  <loadedLevel>OurBase</loadedLevel>
+  <openedLocations>
+    <boolean>true</boolean>
+    <boolean>true</boolean>
+    <boolean>false</boolean>
+    <boolean>false</boolean>
+  </openedLocations>
+  <InventoryItems />
+</SaveInfo>

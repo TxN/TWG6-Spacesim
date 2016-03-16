@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<QuestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Replica>
+    <Replicas>
+      <number>0</number>
+      <text>1</text>
+      <anwser1>1</anwser1>
+      <num1>1</num1>
+      <anwser2>1</anwser2>
+      <num2>1</num2>
+      <anwser3>1</anwser3>
+      <num3>1</num3>
+    </Replicas>
+    <Replicas>
+      <number>1</number>
+      <text>2енревпыреыр</text>
+      <anwser1>авпвап</anwser1>
+      <num1>2</num1>
+      <anwser2>пвап</anwser2>
+      <num2>2</num2>
+      <anwser3>вапвап</anwser3>
+      <num3>2</num3>
+    </Replicas>
+  </Replica>
+</QuestData>
