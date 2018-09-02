@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-
 
 [System.Serializable]
 public class PlayerStats : MonoBehaviour {
@@ -62,8 +60,7 @@ public class PlayerStats : MonoBehaviour {
     public int base2QuestNum = 0;
 
 
-    public void SaveToFile(string filename)
-    {
+    public void SaveToFile(string filename) {
         SaveInfo save = new SaveInfo();
         save.name = name;
         save.money = money;
@@ -91,14 +88,12 @@ public class PlayerStats : MonoBehaviour {
         save.openedLocations = openedLocations;
         save.populateLocations = populateLocations;
 
-        save.Save(Application.dataPath + "/Save/"+filename+".xml");
-        
+		string savePath = Application.dataPath + "/Save/" + filename + ".xml";
+		Debug.Log(savePath);
+		save.Save(savePath);      
     }
 
-    public void LoadFromFile(string filename)
-    {
-   
-
+    public void LoadFromFile(string filename) {
         SaveInfo save = SaveInfo.Load(Application.dataPath + "/Save/" + filename + ".xml");
         name = save.name;
         money = save.money;
@@ -190,7 +185,7 @@ public class PlayerStats : MonoBehaviour {
         player = Instantiate(playerPrefab, pos, Quaternion.identity) as GameObject;
         
       //  player.transform.position = pos;
-        GameObject ship = player.transform.FindChild("Ship").gameObject;
+        GameObject ship = player.transform.Find("Ship").gameObject;
         ship.GetComponent<ShipEquip>().EquipPlayer();
         player = ship;
         Camera cam = transform.GetComponentInChildren<Camera>();

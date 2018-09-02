@@ -1,40 +1,32 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class BossDamageZone : MonoBehaviour,ISelectableTarget,IDamageReciever
-{
+public class BossDamageZone : MonoBehaviour,ISelectableTarget,IDamageReciever {
     public string name = "Двигатель мазершипа";
-    public int health = 9000;
-    int maxHealth;
+    public int    health = 9000;
+    int maxHealth = 9000;
 
-    void Start()
-    {
+    void Start() {
         maxHealth = health;
     }
 
 
-    public void Destruct()
-    {
+    public void Destruct() {
         Destroy(this.gameObject);
     }
 
-    public void DoDamage(int amount)
-    {
+    public void DoDamage(int amount) {
         transform.parent.GetComponent<BossHealth>().AddDamage(amount);
     }
 
-    public int GetHealth()
-    {
+    public int GetHealth() {
         return health;
     }
 
-    public int GetMaxHealth()
-    {
+    public int GetMaxHealth() {
         return maxHealth;
     }
 
-    public string GetName()
-    {
+    public string GetName() {
         return name;
     }
 

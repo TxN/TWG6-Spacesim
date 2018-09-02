@@ -1,13 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 
 [XmlRoot("SaveInfo")]
-public class SaveInfo  
-{
+public class SaveInfo  {
 
     public string name = "Mingebag";
     public int money = 150;
@@ -46,27 +42,20 @@ public class SaveInfo
     public List<Item> inventory = new List<Item>();
 
 
-    public void Save(string path)
-    {
+    public void Save(string path) {
         var serializer = new XmlSerializer(typeof(SaveInfo));
-        using (var stream = new FileStream(path, FileMode.Create))
-        {
+		using (var stream = new FileStream(path, FileMode.Create)) {
             serializer.Serialize(stream, this);
             stream.Close();
         }
     }
 
-    public static SaveInfo Load(string path)
-    {
+    public static SaveInfo Load(string path) {
         var serializer = new XmlSerializer(typeof(SaveInfo));
-        using (var stream = new FileStream(path, FileMode.Open))
-        {
+        using (var stream = new FileStream(path, FileMode.Open)) {
             return serializer.Deserialize(stream) as SaveInfo;
         }
     }
 
-    public SaveInfo()
-    {
-
-    }
+    public SaveInfo() { }
 }

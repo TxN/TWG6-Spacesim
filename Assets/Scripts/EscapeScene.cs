@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-
-
-public class EscapeScene : MonoBehaviour 
-{
+public class EscapeScene : MonoBehaviour {
     public FadeScreen fader;
     public GameObject ship;
     public GameObject warping;
@@ -18,21 +15,21 @@ public class EscapeScene : MonoBehaviour
     public Image title;
 
     float startWarpTime = 2;
-
     bool camLook = false;
     bool enemyWarped = false;
     Vector3 enemyStartScale;
 
     bool showTitle = false;
     bool mute = false;
+
+	AudioSource audiosource = null;
 	
-	void Awake()
-	{
+	void Awake() {
+		audiosource = GetComponent<AudioSource>();
 		Time.timeScale = 1f;
 	}
 
-    void Start()
-    {
+    void Start() {
         enemyStartScale = enemyWarping.transform.localScale;
 
         fader.FadeWhite(5);
@@ -50,89 +47,72 @@ public class EscapeScene : MonoBehaviour
         Invoke("Load", 65f);
     }
 
-    void Update()
-    {
-        if (camLook)
-        {
+    void Update() {
+        if (camLook) {
             Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation((lookTarget.position - Camera.main.transform.position).normalized), 1.5f * Time.deltaTime);
         }
 
-        if (enemyWarped)
-        {
+        if (enemyWarped) {
             enemyWarping.transform.localScale = Vector3.Lerp(enemyWarping.transform.localScale,enemyStartScale * 0.4f , 2f);
         }
 
-        if (showTitle)
-        {
+        if (showTitle) {
             Color col = title.color;
             col.a = Mathf.Lerp(col.a, 1, .2f * Time.deltaTime);
             title.color = col;
         }
 
-        if (mute)
-        {
-            GetComponent<AudioSource>().volume = Mathf.Lerp(GetComponent<AudioSource>().volume, 0, .4f * Time.deltaTime);
-
+        if (mute) {
+			audiosource.volume = Mathf.Lerp(audiosource.volume, 0, .4f * Time.deltaTime);
             Color col = title.color;
             col.a = Mathf.Lerp(col.a, 0, Time.deltaTime);
             title.color = col;
         }
     }
 
-    void StartWarp()
-    {
+    void StartWarp() {
         warping.SetActive(true);
     }
 
-    void HideBase()
-    {
+    void HideBase() {
         ship.SetActive(false);
     }
 
-    void HideWarp()
-    {
+    void HideWarp() {
         warping.SetActive(false);
     }
 
-    void CamLook()
-    {
+    void CamLook() {
         camLook = true;
         Camera.main.GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>().focalTransform = lookTarget;
     }
 
-    void BossWarp()
-    {
+    void BossWarp() {
         enemyWarping.SetActive(true);
     }
 
-    void BossShow()
-    {
+    void BossShow() {
         enemyWarped = true;
         enemy.SetActive(true);
     }
 
-    void BossWarpHide()
-    {
+    void BossWarpHide() {
         enemyWarping.SetActive(false);
     }
 
-    void FadeBlack()
-    {
+    void FadeBlack() {
         fader.FadeBlack(8f);
     }
 
-    void Title()
-    {
+    void Title() {
         showTitle = true;
     }
 
-    void Mute()
-    {
+    void Mute() {
         mute = true;
     }
 
-    void Load()
-    {
-        Application.LoadLevel("MainMenu");
+    void Load() {
+       SceneManager.LoadScene("MainMenu");
     }
 }

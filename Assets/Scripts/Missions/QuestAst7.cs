@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class QuestAst7 : MonoBehaviour,IQuest 
-{
+public class QuestAst7 : MonoBehaviour,IQuest {
     public static QuestTextData questData;
     public string questName = "QuestAst-7";
     int reward = 250;
@@ -16,14 +15,13 @@ public class QuestAst7 : MonoBehaviour,IQuest
     int waitReplica = 1;
 
 
-    void Awake()
-    {
+    void Awake() {
         questData = QuestTextData.Load(Application.dataPath + "/QuestData/" + questName + ".xml");
     }
 
     void OnLevelWasLoaded(int level)
     {
-        string curLevel = Application.loadedLevelName;
+		string curLevel = SceneManager.GetActiveScene().name;
 
         if (!questAccepted)
         {
@@ -152,12 +150,12 @@ public class QuestAst7 : MonoBehaviour,IQuest
         MenuGlobal.instance.QuestComplete();
         MenuGlobal.instance.ClearQuestWindow();
         active = false;
-        Application.LoadLevel("AsteroidBaseWarpEnding");
+		SceneManager.LoadScene("AsteroidBaseWarpEnding");
     }
 
     void QuestTaken()
     {
-        Application.LoadLevel("AsteroidBaseWarpEnding");
+		SceneManager.LoadScene("AsteroidBaseWarpEnding");
         MenuGlobal.instance.QuestTaken();
         questAccepted = true;
     }

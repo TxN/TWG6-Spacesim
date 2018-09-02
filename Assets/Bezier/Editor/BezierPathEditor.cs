@@ -62,13 +62,13 @@ public class BezierPathEditor : Editor
     {
         BezierPath path = (BezierPath)target;
 
-        if (Event.current.type == EventType.mouseDown)
+        if (Event.current.type == EventType.MouseDown)
         {
             // record positions
             pointPos = selectedPoint.p1;
             handlePos = selectedPoint.h1;
         }
-        if (Event.current.type == EventType.mouseUp)
+        if (Event.current.type == EventType.MouseUp)
         {
             if (selectedPoint.p1 != pointPos || selectedPoint.h1 != handlePos)
             {
@@ -86,7 +86,7 @@ public class BezierPathEditor : Editor
         bool needCreatePoint = false;
         bool needDeletePoint = false;
 
-        if (selectedPoint != null && Event.current.type != EventType.repaint)
+        if (selectedPoint != null && Event.current.type != EventType.Repaint)
         {
             // add + and - buttons
             Handles.BeginGUI();
@@ -152,7 +152,7 @@ public class BezierPathEditor : Editor
             }
         }
 
-        if (selectedPoint != null && Event.current.type == EventType.repaint)
+        if (selectedPoint != null && Event.current.type == EventType.Repaint)
         {
             // add + and - buttons
             Handles.BeginGUI();

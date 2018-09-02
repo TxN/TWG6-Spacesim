@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // WarFX Shader
 // (c) 2012 Jean Moreno
 
@@ -49,7 +51,7 @@ Shader "WFX/Multiply Soft Tint"
 			v2f vert (vdata v)
 			{
 				v2f o;
-				o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos (v.vertex);
 				o.color = v.color;
 				o.uv = v.texcoord;
 				return o;

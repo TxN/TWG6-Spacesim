@@ -1,67 +1,56 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class ShipUtility : MonoBehaviour, IDamageReciever 
-{
-
+public class ShipUtility : MonoBehaviour, IDamageReciever {
     public PlayerStats stats = PlayerStats.instance;
-    public AudioClip pickupSnd;
-    public AudioClip picupFailSnd;
-    public AudioClip dropSnd;
-    public AudioClip jumpRejectSnd;
-    public AudioClip damageSnd;
-    public AudioClip lowEnergy;
-    AudioSource audioSource;
-    public GameObject deadFab;
-    GameObject explosion;
-    public GameObject jumpFab;
-    GameObject jumper;
+    public AudioClip   pickupSnd;
+    public AudioClip   picupFailSnd;
+    public AudioClip   dropSnd;
+    public AudioClip   jumpRejectSnd;
+    public AudioClip   damageSnd;
+    public AudioClip   lowEnergy;
+    public GameObject  deadFab;
+    public GameObject  jumpFab;
 
-    string jumpScene;
+    GameObject  jumper;
+	AudioSource audioSource;
 
-    bool dead = false;
+	string jumpScene;
+    bool   dead = false;
 
-	void Start () 
-    {
+	const int ENERGY_RESTORE_PER_TICK = 4;
+
+	void Start () {
         stats = PlayerStats.instance;
         audioSource = GetComponent<AudioSource>();
 	}
 
-    public int GetHealth()
-    {
+    public int GetHealth() {
         return stats.health;
     }
 
-    public int GetMaxHealth()
-    {
+    public int GetMaxHealth() {
         return stats.maxHealth;
     }
 
-    public void DoDamage(int amount)
-    {
-
+    public void DoDamage(int amount) {
         stats.health -= amount;
         audioSource.PlayOneShot(damageSnd);
 
-        if ((stats.health <= 0)&&(!dead))
-        {
+        if ((stats.health <= 0)&&(!dead)) {
             dead = true;
-            if (deadFab != null)
-            {
+            if (deadFab != null) {
                 CancelInvoke();
                 Camera.main.transform.parent = null;
-                explosion = Instantiate(deadFab, transform.position, transform.rotation) as GameObject;
+                Instantiate(deadFab, transform.position, transform.rotation);
             }
             Destroy(this.gameObject);
         }
     }
 
-    public void GrabItems()
-    {
-        foreach (Collider col in Physics.OverlapSphere(transform.position, 10f))
-	    {
-            if (PickupItem(col.gameObject))
-            {
+    public void GrabItems() {
+        foreach (Collider col in Physics.OverlapSphere(transform.position, 10f)) {
+            if (PickupItem(col.gameObject)) {
                 audioSource.PlayOneShot(pickupSnd);
                 return;
             }
@@ -69,58 +58,43 @@ public class ShipUtility : MonoBehaviour, IDamageReciever
     }
 
 
-    public void DropItem(Item it)
-    {
-
+    public void DropItem(Item it) {
         GameObject item = Instantiate(Resources.Load(it.name), transform.position + new Vector3(0, 0, -5), Quaternion.identity)as GameObject;
         item.GetComponent<Rigidbody>().angularVelocity = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20, 20));
         audioSource.PlayOneShot(dropSnd);
         stats.inventory.Remove(it);
     }
 
-    public bool PickupItem(GameObject itemObj)
-    {
+    public bool PickupItem(GameObject itemObj) {
         Itm it = itemObj.GetComponent<Itm>();
-        if (it)
-        {
-            if (stats.AddToInventory(new Item(it) ) )
-            {
+        if (it) {
+            if (stats.AddToInventory(new Item(it) ) ) {
                 GUIManager.instance.AddChatMessage(new ChatMessage(it.title + " помещен в трюм", Color.green));
                 Destroy(itemObj);
                 return true;
-            }
-            else
-            {
+            } else {
                 audioSource.PlayOneShot(pickupSnd);
                 return false;
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
-        
     }
 
-    public void SetJumpTarget(string target)
-    {
+    public void SetJumpTarget(string target) {
         jumpScene = target;
     }
 
-   void Jump()
-    {
+   void Jump() {
         PlayerStats stats = PlayerStats.instance;
         stats.spawnPositionIndex = 1;
         stats.spawnInNextScene = true;
         stats.RefreshWeapons();
-        Application.LoadLevel(jumpScene);
-        
+        SceneManager.LoadScene(jumpScene);
     }
 
-  public  void JumpStart()
-    {
-        if ((GetComponent<ShipControl>().trgSpd > PlayerStats.instance.maxSpeed * 0.9f)&&(jumpScene != Application.loadedLevelName))
-        {
+  public  void JumpStart() {
+        if ((GetComponent<ShipControl>().trgSpd > PlayerStats.instance.maxSpeed * 0.9f)&&(jumpScene != SceneManager.GetActiveScene().name)) {
             ToggleJumpMenu();
             jumper = Instantiate(jumpFab) as GameObject;
             jumper.transform.position = transform.position;
@@ -130,66 +104,46 @@ public class ShipUtility : MonoBehaviour, IDamageReciever
             Camera.main.gameObject.GetComponent<CamFollow>().enabled = false;
             GetComponent<ShipControl>().enable = false;
             Invoke("Jump", 3.7f);
-        }
-        else
-        {
+        } else {
             GUIManager.instance.AddChatMessage(new ChatMessage("Прыжок отменен. Недостаточная скорость или некорректная точка назначения.", Color.red));
             audioSource.PlayOneShot(jumpRejectSnd);
         }
-
     }
 
-    void ToggleJumpMenu()
-    {
+    void ToggleJumpMenu() {
         ShipControl controls = GetComponent<ShipControl>();
         bool state = GUIManager.instance.ToggleWarpWindow();
-        if (state) //меню было открыто
-        {
-            controls.enable = false;
+        if (state) { //меню было открыто
+			controls.enable = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-        }
-        else //меню было закрыто
-        {
+        } else {
             controls.enable = true;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
-    void FixedUpdate()
-    {
-
-        stats.energy += 4;
-        stats.energy = Mathf.Clamp(stats.energy, 0, stats.maxEnergy);
+    void FixedUpdate(){
+        stats.energy = Mathf.Clamp(stats.energy + ENERGY_RESTORE_PER_TICK, 0, stats.maxEnergy);
     }
 
-    void Update()
-    {
-        if (stats == null)
-        {
+    void Update() {
+        if (stats == null) {
             stats = PlayerStats.instance;
         }
 
-        
-        
-
-        if (Input.GetKeyDown("f"))
-        {
+        if (Input.GetKeyDown(KeyCode.F)) {
             GrabItems();
         }
 
-        if (Input.GetKeyDown("g"))
-        {
-            foreach (Item item in stats.inventory)
-            {
-                Debug.Log(item.name);
-            }
-            DropItem(stats.inventory[0]);
+        if (Input.GetKeyDown(KeyCode.G)) {
+			if (stats.inventory.Count > 0) {
+				DropItem(stats.inventory[0]);
+			}
         }
 
-        if (Input.GetKeyDown("j"))
-        {
+        if (Input.GetKeyDown(KeyCode.J)) {
             ToggleJumpMenu();
         }
     }

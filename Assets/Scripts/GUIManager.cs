@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour {
@@ -46,10 +46,8 @@ public class GUIManager : MonoBehaviour {
     ChatMessage[] chat = new ChatMessage[4];
     public Text[] chatStrings = new Text[4];
 
-    void Awake()
-    {
-        if (instance == null)
-        {
+    void Awake() {
+        if (instance == null) {
             instance = this;
         }
 
@@ -59,22 +57,12 @@ public class GUIManager : MonoBehaviour {
         energyBarWidth = energyBar.rect.width;
     }
 
-    void Start()
-    {
-       // AddChatMessage("Шынгыс:");
-       // AddChatMessage("Привет");
-      //  AddChatMessage("ты че");
-      //  AddChatMessage("ахуел");
-    }
-
-    void Update()
-    {
+    void Update() {
         RefreshHealth();
         RefreshCargoMass();
         RefreshEnergy();
 
-        if (warpWindow.activeInHierarchy)
-        {
+        if (warpWindow.activeInHierarchy) {
             PlayerStats stats = PlayerStats.instance;
             warpLoc1.SetActive(stats.openedLocations[0]);
             warpLoc2.SetActive(stats.openedLocations[1]);
@@ -82,54 +70,41 @@ public class GUIManager : MonoBehaviour {
             warpLoc4.SetActive(stats.openedLocations[3]);
         }
 
-        if (Input.GetKeyDown("escape"))
-        {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             ToggleEscMenu();
         }
     }
 
-    public bool ToggleWarpWindow()
-    {
-        if (warpWindow.activeInHierarchy)
-        {
+    public bool ToggleWarpWindow() {
+        if (warpWindow.activeInHierarchy) {
             warpWindow.SetActive(false);
             return false;
-        }
-        else
-        {
+        } else {
             warpWindow.SetActive(true);
             return true;
         }
     }
 
-    public bool ToggleEscMenu()
-    {
+    public bool ToggleEscMenu() {
         ShipControl controls = null;
-        if (PlayerStats.instance.player != null)
-        {
+        if (PlayerStats.instance.player != null) {
             controls = PlayerStats.instance.player.GetComponent<ShipControl>();
         }
-
        
-        if (escMenu.activeInHierarchy)
-        {
+        if (escMenu.activeInHierarchy) {
             Time.timeScale = 1f;
             escMenu.SetActive(false);
-            if (controls != null)
-            {
+            if (controls != null) {
                 controls.enable = true;
             }
             
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             return false;
-        }
-        else
-        {
+        } else {
             Time.timeScale = 0f;
             escMenu.SetActive(true);
-            if (controls != null)
-            {
+            if (controls != null) {
                 controls.enable = false;
             }
             Cursor.lockState = CursorLockMode.None;
@@ -138,55 +113,43 @@ public class GUIManager : MonoBehaviour {
         }
     }
 
-    public void Exit()
-    {
+    public void Exit() {
         Application.Quit();
     }
 
-    public void MainMenu()
-    {
+    public void MainMenu() {
         Destroy(PlayerStats.instance.gameObject);
-        Application.LoadLevel("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
-    public void LoadGame()
-    {
-        foreach (Transform obj in PlayerStats.instance.transform.GetComponentsInChildren<Transform>())
-        {
-            //Debug.Log(obj.name);
-            if (obj.name != "Main")
-            {
+    public void LoadGame() {
+        foreach (Transform obj in PlayerStats.instance.transform.GetComponentsInChildren<Transform>()) {
+            if (obj.name != "Main") {
                 Destroy(obj.gameObject);
             }
             
         }
         PlayerStats.instance.LoadFromFile(PlayerStats.instance.name);
-        Application.LoadLevel(PlayerStats.instance.currentLevel);
+        SceneManager.LoadScene(PlayerStats.instance.currentLevel);
     }
 
-    public void SetWarpTarget(string target)
-    {
+    public void SetWarpTarget(string target) {
         PlayerStats.instance.player.GetComponent<ShipUtility>().SetJumpTarget(target);
     }
 
-    public void ActivateJumpDrive() 
-    {
+    public void ActivateJumpDrive() {
         PlayerStats.instance.player.GetComponent<ShipUtility>().JumpStart();
     }
 
-    public void SetSpeed(float percent)
-    {
+    public void SetSpeed(float percent) {
         speedBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, percent * spdBarWidth);
     }
 
 
-    public void RefreshHealth()
-    {
+    public void RefreshHealth() {
        PlayerStats stats = PlayerStats.instance;
-        if (stats != null)
-        {
-            if (stats.player != null)
-            {
+        if (stats != null) {
+            if (stats.player != null) {
                 healthText.text = stats.health.ToString() + " / " + stats.maxHealth.ToString();
                 SetHealth(Mathf.Clamp((float)stats.health / stats.maxHealth,0,1));
 
@@ -196,13 +159,10 @@ public class GUIManager : MonoBehaviour {
         }
     }
 
-    public void RefreshEnergy()
-    {
+    public void RefreshEnergy() {
         PlayerStats stats = PlayerStats.instance;
-        if (stats != null)
-        {
-            if (stats.player != null)
-            {
+        if (stats != null) {
+            if (stats.player != null) {
                 energyText.text = stats.energy.ToString() + " / " + stats.maxEnergy.ToString();
                 float percent =  (float)stats.energy / stats.maxEnergy;
                 curvedEnMat.SetFloat("_Angle", percent);
@@ -212,52 +172,42 @@ public class GUIManager : MonoBehaviour {
 
     }
 
-    public void RefreshCargoMass()
-    {
+    public void RefreshCargoMass() {
           PlayerStats stats = PlayerStats.instance;
-          if (stats != null)
-          {
-              if (stats.player != null)
-              {
+          if (stats != null) {
+              if (stats.player != null) {
                   cargoText.text = stats.GetCargoMass() + " / " + stats.maxcargo;
               }
           }
     }
 
-    public void SetHealth(float percent)
-    {
+    public void SetHealth(float percent) {
         healthBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, percent * hpBarWidth);
         curvedHPMat.SetFloat("_Angle", percent);
     }
 
-    public void SetCurrentWeaponName(string name)
-    {
+    public void SetCurrentWeaponName(string name) {
         curWeapon.text = name;
     }
 
-    public void SetAmmoNum(int num)
-    {
+    public void SetAmmoNum(int num) {
         ammoNum.text = num.ToString();
     }
 
-    public void AddChatMessage(ChatMessage message)
-    {
+    public void AddChatMessage(ChatMessage message) {
         chat[0] = chat[1];
         chat[1] = chat[2];
         chat[2] = chat[3];
         chat[3] = message;
 
         int chatStr = 0;
-        for (int i = 0; i < chat.Length; i++)
-        {
-            if (chat[i] != null)
-            {
+        for (int i = 0; i < chat.Length; i++) {
+            if (chat[i] != null) {
                 chatStrings[chatStr].text = chat[i].text;
                 chatStrings[chatStr].color = chat[i].color;
-                chatStr++;
-                
+                chatStr++;                
             }
         }
     }
-	
 }
+
